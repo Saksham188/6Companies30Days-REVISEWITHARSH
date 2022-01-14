@@ -1,0 +1,96 @@
+https://practice.geeksforgeeks.org/problems/ugly-numbers2254/1/#
+
+Ugly numbers are numbers whose only prime factors are 2, 3 or 5. The sequence 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, … shows the first 11 ugly numbers.
+By convention, 1 is included. Write a program to find Nth Ugly Number.
+
+Example 1:
+
+Input:
+N = 10
+Output: 12
+Explanation: 10th ugly number is 12.
+Example 2:
+
+Input:
+N = 4
+Output: 4
+Explanation: 4th ugly number is 4.
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function getNthUglyNo() which takes an integer n as parameters 
+and returns an integer denoting the answer.
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+
+Constraints:
+1 ≤ N ≤ 104
+
+
+
+#####################################
+CODE:
+#####################################
+
+LOGIC:
+// Ugly numbers are numbers which have prime factors 2 ,3,5 only.we have to also include 1 in ans
+// So ugly numbers are 1,2,3,4,5,6,8,9,10,12....  we have to find kth ugly number.
+
+//Brute Force: Generate all ugly numbers ,then sort and print nth ugly number.
+
+// Here we will use dynamic programming to get our ans. as we can see there is an order being followed start from i=1 ,then i*2,i*3,i*5 then i++ and sort.
+// followng this logic we can find all our ans as follows
+// Now DP LOGIC: we keep 3ptrs and we think of it as merging 3 sorted list ,3ptrs ->1st for 2 , 2nd for 3,3rd for 5
+// Now we assume that we already have Uk ie the kth ugly number now our Uk+1 will be min(p1*2,p2*3,p3*5) where p1,p2,p3 are already generated and fir jonsa bhi ans choose kia uska ptr increment krdo. 
+// 
+// 
+
+
+*****************************************
+
+// { Driver Code Starts
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ull unsigned long long
+
+
+ // } Driver Code Ends
+//User function template for C++
+class Solution{
+public:	
+  
+	// #define ull unsigned long long
+	/* Function to get the nth ugly number*/
+	ull getNthUglyNo(int n) {
+	    // code here
+	    int p2(0),p3(0),p5(0);
+	    vector<ull>ans(n+1);
+	    ans[0]=1;  ///bcse first number should be 1.
+	    for(int i=1;i<=n;i++)
+	    {
+	        ans[i]=min(min(2*ans[p2],3*ans[p3]),5*ans[p5]);
+	        if(ans[i]==2*ans[p2])  p2++;
+	        if(ans[i]==3*ans[p3])  p3++;
+	        if(ans[i]==5*ans[p5])  p5++;
+	        
+	    }
+	    return ans[n-1];
+	}
+};
+
+// { Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        Solution ob;
+        auto ans = ob.getNthUglyNo(n);
+        cout << ans << "\n";
+    }
+    return 0;
+}
+  // } Driver Code Ends
